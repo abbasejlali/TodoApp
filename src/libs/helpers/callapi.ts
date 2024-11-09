@@ -18,17 +18,6 @@ export const callapi = () => {
       return res;
     },
     async (err) => {
-      const res = err.response;
-      if (res.status === 400) {
-        throw console.log(res);
-      }
-      if (res.status === 404) {
-        throw console.log(res);
-      }
-      if (res.status === 406) {
-        throw console.log(res);
-      }
-
       throw err;
     }
   );
