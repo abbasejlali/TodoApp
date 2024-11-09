@@ -1,5 +1,14 @@
+import { Route, Routes } from "react-router-dom";
+import Homepage from "./pages/Homepage";
+
 function App() {
-  return <div className=" text-slate-950 bg-[red] ">todo app</div>;
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+      </Routes>
+    </>
+  );
 }
 
 export default App;
