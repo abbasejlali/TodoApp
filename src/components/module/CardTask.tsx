@@ -1,20 +1,22 @@
 import { Todo } from "../../typescript/interface";
 
 function CardTask({ todo }: { todo: Todo }) {
-  const { title, completed } = todo;
+  const { title, completed, id, userId } = todo;
   return (
-    <div className="card min-h-60 bg-white border shadow-md text-neutral-content w-96">
-      <input type="checkbox" className="checkbox absolute top-4 left-3 " />
-      <div className="card-body items-center text-center">
+    <div className="bg-white border shadow-md card min-h-60 text-neutral-content w-96">
+      <input type="checkbox" className="absolute checkbox top-4 left-3 " />
+      <div className="items-center text-center card-body">
         <h2 className="card-title text-slate-900">{title}</h2>
+        <h6 className="card-title text-slate-900">id : {id}</h6>
+        <h6 className="card-title text-slate-900">userId : {userId}</h6>
         {completed ? (
-          <p className=" text-green-700 font-medium  ">Completed</p>
+          <p className="font-medium text-green-700 ">Completed</p>
         ) : (
-          <p className=" text-red-700 font-medium  ">Uncompleted</p>
+          <p className="font-medium text-red-700 ">Uncompleted</p>
         )}
-        <div className="card-actions justify-end mt-8">
-          <button className="btn btn-warning text-white">edit</button>
-          <button className="btn btn-error text-white">Delete</button>
+        <div className="justify-end mt-8 card-actions">
+          <button className="text-white btn btn-warning">edit</button>
+          <button className="text-white btn btn-error">Delete</button>
         </div>
       </div>
     </div>

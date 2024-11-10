@@ -16,4 +16,10 @@ interface FetchTodosArgs {
   completed: string | null;
 }
 
-export { type Todo, type TodoState, type FetchTodosArgs };
+interface TaskListArgs {
+  setFilter: (newFilter: string) => void;
+  todos: Todo[];
+  setTodosBySearch: (newFilter: Todo[]) => void;
+}
+
+export { type Todo, type TodoState, type FetchTodosArgs, type TaskListArgs };

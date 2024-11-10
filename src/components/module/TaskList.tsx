@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 
-function TaskList({ setFilter }: { setFilter: (newFilter: string) => void }) {
+// typescript
+import { TaskListArgs, Todo } from "../../typescript/interface";
+
+function TaskList({ setFilter, todos, setTodosBySearch }: TaskListArgs) {
+  const [search, setSearch] = useState<string>("");
   const [selectedValue, setSelectedValue] = useState<string>(() => {
     return localStorage.getItem("filter") || "";
   });
-  const changeHandeler = (e: any) => {
+
+  const filterHandeler = (e: any) => {
     setSelectedValue(e.target.value);
     setFilter(e.target.value);
   };
@@ -13,15 +18,29 @@ function TaskList({ setFilter }: { setFilter: (newFilter: string) => void }) {
     setFilter(selectedValue);
   }, [selectedValue]);
 
+  const searchHandeler = (e: any) => {
+    setSearch(e.target.value);
+  };
+
+  useEffect(() => {
+    console.log(search);
+    const searchBykeyword: Todo[] = todos?.filter((todo) =>
+      todo.title.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+    );
+
+    setTodosBySearch(searchBykeyword);
+  }, [search]);
   return (
     <div className="flex items-center justify-between w-full gap-3 mb-8 ">
       <input
         type="text"
         placeholder="search..."
         className="w-full input input-bordered"
+        value={search}
+        onChange={searchHandeler}
       />
       <select
-        onChange={changeHandeler}
+        onChange={filterHandeler}
         value={selectedValue}
         className="w-full max-w-xs select select-bordered "
       >

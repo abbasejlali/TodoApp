@@ -10,6 +10,7 @@ import { fetchTodos } from "../../features/GetAllTodos/GetTodosSlice";
 // type
 import { AppDispatch, RootState } from "../../app/store";
 import TaskList from "../module/TaskList";
+import { Todo } from "../../typescript/interface";
 
 function Homepage() {
   const { loading, todos } = useSelector((state: RootState) => state?.todos);
@@ -19,6 +20,7 @@ function Homepage() {
   const [filter, setFilter] = useState<string>(() => {
     return localStorage.getItem("filter") || "";
   });
+  const [todosBySearch, setTodosBySearch] = useState<Todo[]>([]);
 
   useEffect(() => {
     localStorage.setItem("filter", filter);
@@ -30,9 +32,6 @@ function Homepage() {
     }
   }, [currentValue, filter]);
 
-  useEffect(() => {
-    console.log(todos);
-  }, [todos]);
   return (
     <>
       {loading ? (
@@ -41,15 +40,24 @@ function Homepage() {
         </div>
       ) : (
         <div className="container p-10 mx-auto max-w-7xl">
-          <TaskList setFilter={setFilter} />
+          <TaskList
+            setFilter={setFilter}
+            todos={todos}
+            setTodosBySearch={setTodosBySearch}
+          />
           <div className="flex flex-wrap items-start justify-between w-full gap-5 ">
-            {todos.length > 0 ? (
-              todos.map((todo) => <CardTask key={todo.id} todo={todo} />)
+            {todosBySearch.length > 0 ? (
+              todosBySearch.map((todo) => (
+                <CardTask key={todo.id} todo={todo} />
+              ))
             ) : (
-              <div role="alert" className="alert alert-error">
+              <div
+                role="alert"
+                className="flex items-center justify-center alert alert-error min-h-52"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-6 h-6 stroke-current shrink-0"
+                  className="w-10 h-10 text-white stroke-current shrink-0"
                   fill="none"
                   viewBox="0 0 24 24"
                 >
@@ -60,7 +68,9 @@ function Homepage() {
                     d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                <span>Error! Task failed successfully.</span>
+                <span className="text-4xl font-bold text-white ">
+                  Sorry , There is a problem.
+                </span>
               </div>
             )}
           </div>
