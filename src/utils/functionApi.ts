@@ -1,6 +1,8 @@
-import { DataTodoPost, FetchTodosArgs } from "../typescript/interface";
 import { callapi } from "../libs/helpers/callapi";
 import { errorAlert } from "../libs/errorAlert";
+
+import { DataTodoPost, FetchTodosArgs, Todo } from "../typescript/interface";
+import { successAlert } from "../libs/successAlert";
 
 const fetchTodosApi = async ({ page, completed }: FetchTodosArgs) => {
   try {
@@ -20,7 +22,6 @@ const postTodoApi = async ({ title, body, userId }: DataTodoPost) => {
       body,
       userId,
     });
-    console.log(res);
     return { ...res?.data, complated: false };
   } catch (err: any) {
     errorAlert();
@@ -28,4 +29,20 @@ const postTodoApi = async ({ title, body, userId }: DataTodoPost) => {
   }
 };
 
-export { postTodoApi, fetchTodosApi };
+const editTodoApi = async ({ title, id, userId, completed }: Todo) => {
+  try {
+    const res = await callapi().put(`/todos/${id}`, {
+      title,
+      userId,
+      id,
+      completed,
+    });
+    successAlert();
+    return res?.data;
+  } catch (err: any) {
+    errorAlert();
+    return err;
+  }
+};
+
+export { postTodoApi, fetchTodosApi, editTodoApi };

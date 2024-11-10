@@ -16,6 +16,11 @@ interface TodoInitialState {
     todo: TodoPost | null;
     error: string | null;
   };
+  editTodo: {
+    loading: boolean;
+    editdata: Todo | {};
+    error: string | null;
+  };
 }
 
 interface FetchTodosArgs {
@@ -34,6 +39,7 @@ interface DataTodoPost {
   body: string;
   userId: number;
 }
+
 interface TodoPost {
   title: string;
   id: number;
@@ -41,9 +47,17 @@ interface TodoPost {
   body: string;
   complated?: string;
 }
+
 interface GetNewTodo {
   isLoading: boolean;
   data: TodoPost | null;
+}
+
+interface DataTodoEdit {
+  title: string;
+  id: number;
+  userId: number;
+  completed?: boolean | undefined;
 }
 
 export {
@@ -54,4 +68,5 @@ export {
   type DataTodoPost,
   type GetNewTodo,
   type TodoPost,
+  type DataTodoEdit,
 };

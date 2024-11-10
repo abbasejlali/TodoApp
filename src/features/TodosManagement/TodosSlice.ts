@@ -8,7 +8,11 @@ import {
   TodoInitialState,
   TodoPost,
 } from "../../typescript/interface";
-import { fetchTodosApi, postTodoApi } from "../../utils/functionApi";
+import {
+  editTodoApi,
+  fetchTodosApi,
+  postTodoApi,
+} from "../../utils/functionApi";
 
 const initialState: TodoInitialState = {
   getTodos: {
@@ -19,6 +23,11 @@ const initialState: TodoInitialState = {
   postTodos: {
     loading: false,
     todo: null,
+    error: null,
+  },
+  editTodo: {
+    loading: false,
+    editdata: {},
     error: null,
   },
 };
@@ -32,6 +41,8 @@ const postTodo = createAsyncThunk<TodoPost, DataTodoPost>(
   "Todos/postTodo",
   postTodoApi
 );
+
+const editTodo = createAsyncThunk<Todo, Todo>("Todos/editTodo", editTodoApi);
 
 const TodosSlice = createSlice({
   name: "Todos",
@@ -77,8 +88,28 @@ const TodosSlice = createSlice({
       state.postTodos.todo = null;
       state.postTodos.error = "sorry ,There is a problem.";
     });
+
+    //edit todo
+    builder.addCase(editTodo.pending, (state) => {
+      state.editTodo.loading = true;
+    });
+
+    builder.addCase(
+      editTodo.fulfilled,
+      (state, action: PayloadAction<Todo>) => {
+        state.editTodo.loading = false;
+        state.editTodo.editdata = action.payload;
+        state.editTodo.error = "";
+      }
+    );
+
+    builder.addCase(editTodo.rejected, (state) => {
+      state.editTodo.loading = false;
+      state.editTodo.editdata = {};
+      state.editTodo.error = "sorry ,There is a problem.";
+    });
   },
 });
 
 export default TodosSlice.reducer;
-export { fetchTodos, postTodo };
+export { fetchTodos, postTodo, editTodo };
