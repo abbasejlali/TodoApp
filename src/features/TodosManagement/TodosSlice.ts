@@ -1,16 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-// helper
-import { callapi } from "../../libs/helpers/callapi";
-import { errorAlert } from "../../libs/errorAlert";
-
 // typescripte
 import {
+  DataTodoPost,
   FetchTodosArgs,
   Todo,
   TodoInitialState,
   TodoPost,
 } from "../../typescript/interface";
+import { fetchTodosApi, postTodoApi } from "../../utils/functionApi";
 
 const initialState: TodoInitialState = {
   getTodos: {
@@ -27,40 +25,12 @@ const initialState: TodoInitialState = {
 
 const fetchTodos = createAsyncThunk<Todo[], FetchTodosArgs>(
   "Todos/fetchTodos",
-  async ({ page, completed }) => {
-    try {
-      const res = await callapi().get(
-        `/todos?${completed}&_page=${page}&_limit=10`
-      );
-      return res?.data;
-    } catch (err) {
-      return err;
-    }
-  }
+  fetchTodosApi
 );
-
-interface DataTodoPost {
-  title: string;
-  body: string;
-  userId: number;
-}
 
 const postTodo = createAsyncThunk<TodoPost, DataTodoPost>(
   "Todos/postTodo",
-  async ({ title, body, userId }) => {
-    try {
-      const res = await callapi().post("/todos", {
-        title,
-        body,
-        userId,
-      });
-      console.log(res);
-      return { ...res?.data, complated: false };
-    } catch (err: any) {
-      errorAlert();
-      return err;
-    }
-  }
+  postTodoApi
 );
 
 const TodosSlice = createSlice({
