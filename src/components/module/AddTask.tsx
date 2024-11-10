@@ -1,23 +1,19 @@
-import { useEffect, useState } from "react";
-
-// helper
-import { callapi } from "../../libs/helpers/callapi";
-import { toast } from "react-toastify";
+import { useState } from "react";
 
 // mocule
 import CardTask from "./CardTask";
 
 // typescript
-import { DataTodoPost, GetNewTodo } from "../../typescript/interface";
-import axios from "axios";
-import { errorAlert } from "../../libs/errorAlert";
+import { DataTodoPost } from "../../typescript/interface";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../app/store";
+import { postTodo } from "../../features/TodosManagement/TodosSlice";
 
 function AddTask() {
-  const [getNewTodo, setGetNewTodo] = useState<GetNewTodo>({
-    isLoading: false,
-    data: null,
-  });
-
+  const {
+    postTodos: { loading, todo },
+  } = useSelector((state: RootState) => state.todos);
+  const daispatch = useDispatch<AppDispatch>();
   const [dataTodoPost, setDataTodoPost] = useState<DataTodoPost>({
     title: "",
     body: "",
@@ -26,20 +22,9 @@ function AddTask() {
 
   const createTodoHandeler = async (e: any) => {
     e.preventDefault();
-    const { title, body } = dataTodoPost;
+    const { title, body, userId } = dataTodoPost;
     if (title && body) {
-      setGetNewTodo({ ...getNewTodo, isLoading: true });
-      try {
-        const res = await callapi().post("/todos", dataTodoPost);
-        setGetNewTodo({
-          ...getNewTodo,
-          isLoading: false,
-          data: { ...res?.data, complated: false },
-        });
-      } catch (err) {
-        setGetNewTodo({ ...getNewTodo, isLoading: false });
-        errorAlert();
-      }
+      daispatch(postTodo({ title, body, userId }));
     }
   };
 
@@ -47,9 +32,6 @@ function AddTask() {
     setDataTodoPost({ ...dataTodoPost, [e.target.name]: e.target.value });
   };
 
-  useEffect(() => {
-    console.log(getNewTodo);
-  }, [getNewTodo]);
   return (
     <>
       <form
@@ -73,7 +55,7 @@ function AddTask() {
           name="body"
         ></textarea>
         <button className="w-full max-w-xs text-lg font-medium text-white btn btn-success ">
-          {getNewTodo.isLoading ? (
+          {loading ? (
             <>
               <span className="loading loading-spinner"></span>
               loading
@@ -83,7 +65,7 @@ function AddTask() {
           )}
         </button>
       </form>
-      {getNewTodo.data?.id && <CardTask todo={getNewTodo.data} />}
+      {todo?.id && <CardTask todo={todo} />}
     </>
   );
 }

@@ -7,14 +7,16 @@ import TaskList from "../module/TaskList";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTodos } from "../../features/GetAllTodos/GetTodosSlice";
+import { fetchTodos } from "../../features/TodosManagement/TodosSlice";
 
 // type
 import { AppDispatch, RootState } from "../../app/store";
 import { Todo } from "../../typescript/interface";
 
 function Homepage() {
-  const { loading, todos } = useSelector((state: RootState) => state?.todos);
+  const {
+    getTodos: { loading, todos },
+  } = useSelector((state: RootState) => state?.todos);
   const dispatch = useDispatch<AppDispatch>();
   const [currentValue, setCurrentValue] = useState<number>(1);
   const totalPages = Math.ceil(200 / 10);

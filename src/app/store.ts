@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import GetTodosReducer from "../features/GetAllTodos/GetTodosSlice";
+import GetTodosReducer from "../features/TodosManagement/TodosSlice";
 
 const store = configureStore({
   reducer: {

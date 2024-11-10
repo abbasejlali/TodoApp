@@ -5,10 +5,17 @@ interface Todo {
   completed?: boolean;
 }
 
-interface TodoState {
-  loading: boolean;
-  todos: Todo[];
-  error: string;
+interface TodoInitialState {
+  getTodos: {
+    loading: boolean;
+    todos: Todo[];
+    error: string | null;
+  };
+  postTodos: {
+    loading: boolean;
+    todo: TodoPost | null;
+    error: string | null;
+  };
 }
 
 interface FetchTodosArgs {
@@ -41,9 +48,10 @@ interface GetNewTodo {
 
 export {
   type Todo,
-  type TodoState,
+  type TodoInitialState,
   type FetchTodosArgs,
   type TaskListArgs,
   type DataTodoPost,
   type GetNewTodo,
+  type TodoPost,
 };
