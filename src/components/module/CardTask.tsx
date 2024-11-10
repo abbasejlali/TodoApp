@@ -1,7 +1,7 @@
 import { Todo } from "../../typescript/interface";
 
 function CardTask({ todo }: { todo: Todo }) {
-  const { title, completed, id, userId } = todo;
+  const { title, id, completed, userId } = todo;
   return (
     <div className="bg-white border shadow-md card min-h-60 text-neutral-content w-96">
       <input type="checkbox" className="absolute checkbox top-4 left-3 " />

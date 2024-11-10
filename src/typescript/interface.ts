@@ -2,7 +2,7 @@ interface Todo {
   userId: number;
   id: number;
   title: string;
-  completed: boolean;
+  completed?: boolean;
 }
 
 interface TodoState {
@@ -22,4 +22,28 @@ interface TaskListArgs {
   setTodosBySearch: (newFilter: Todo[]) => void;
 }
 
-export { type Todo, type TodoState, type FetchTodosArgs, type TaskListArgs };
+interface DataTodoPost {
+  title: string;
+  body: string;
+  userId: number;
+}
+interface TodoPost {
+  title: string;
+  id: number;
+  userId: number;
+  body: string;
+  complated?: string;
+}
+interface GetNewTodo {
+  isLoading: boolean;
+  data: TodoPost | null;
+}
+
+export {
+  type Todo,
+  type TodoState,
+  type FetchTodosArgs,
+  type TaskListArgs,
+  type DataTodoPost,
+  type GetNewTodo,
+};

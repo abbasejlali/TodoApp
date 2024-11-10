@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 // module
 import CardTask from "../module/CardTask";
+import AddTask from "../module/AddTask";
+import TaskList from "../module/TaskList";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +11,6 @@ import { fetchTodos } from "../../features/GetAllTodos/GetTodosSlice";
 
 // type
 import { AppDispatch, RootState } from "../../app/store";
-import TaskList from "../module/TaskList";
 import { Todo } from "../../typescript/interface";
 
 function Homepage() {
@@ -74,6 +75,7 @@ function Homepage() {
               </div>
             )}
           </div>
+          <AddTask />
           <div className="flex items-center justify-center w-full my-5 join ">
             <button
               className="join-item btn"
