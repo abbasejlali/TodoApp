@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 // actions
 import {
+  deleteTodo,
   editTodo,
   removeAmount,
 } from "../../features/TodosManagement/TodosSlice";
@@ -17,6 +18,7 @@ function TaskItem({ todo }: { todo: Todo }) {
   const { id, userId, completed, title } = todo;
   const {
     editTodo: { editdata, loading },
+    deleteTodo: { loading: loadingdelete, deletedata },
   } = useSelector((state: RootState) => state.todos);
   const dispatch = useDispatch<AppDispatch>();
   const [openModal, setOpenModal] = useState(false);
@@ -47,6 +49,11 @@ function TaskItem({ todo }: { todo: Todo }) {
       setDataTodoEdit({ ...dataTodoEdit, id, title, completed, userId });
   }, [openModal]);
 
+  const deleteHandeler = async () => {
+    dispatch(deleteTodo({ id }));
+  };
+
+  console.log({ deletedata, loadingdelete });
   return (
     <>
       <button
@@ -55,7 +62,9 @@ function TaskItem({ todo }: { todo: Todo }) {
       >
         edit
       </button>
-      <button className="text-white btn btn-error">Delete</button>
+      <button className="text-white btn btn-error" onClick={deleteHandeler}>
+        Delete
+      </button>
       <div
         id="authentication-modal"
         aria-hidden="true"

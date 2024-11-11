@@ -35,6 +35,10 @@ function Homepage() {
     }
   }, [currentValue, filter]);
 
+  useEffect(() => {
+    setTodosBySearch(todos);
+  }, [todos]);
+
   return (
     <>
       {loading ? (

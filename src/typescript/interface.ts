@@ -21,6 +21,11 @@ interface TodoInitialState {
     editdata: Todo | {};
     error: string | null;
   };
+  deleteTodo: {
+    loading: boolean;
+    deletedata: { id: number } | undefined;
+    error: string | null;
+  };
 }
 
 interface FetchTodosArgs {

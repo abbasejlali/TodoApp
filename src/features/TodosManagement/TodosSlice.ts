@@ -8,7 +8,10 @@ import {
   TodoInitialState,
   TodoPost,
 } from "../../typescript/interface";
+
+// function api
 import {
+  deleteTodoApi,
   editTodoApi,
   fetchTodosApi,
   postTodoApi,
@@ -30,6 +33,11 @@ const initialState: TodoInitialState = {
     editdata: {},
     error: null,
   },
+  deleteTodo: {
+    loading: false,
+    deletedata: undefined,
+    error: null,
+  },
 };
 
 const fetchTodos = createAsyncThunk<Todo[], FetchTodosArgs>(
@@ -43,6 +51,11 @@ const postTodo = createAsyncThunk<TodoPost, DataTodoPost>(
 );
 
 const editTodo = createAsyncThunk<Todo, Todo>("Todos/editTodo", editTodoApi);
+
+const deleteTodo = createAsyncThunk<any, { id: number }>(
+  "Todos/deleteTodo",
+  deleteTodoApi
+);
 
 const TodosSlice = createSlice({
   name: "Todos",
@@ -118,9 +131,32 @@ const TodosSlice = createSlice({
       state.editTodo.editdata = {};
       state.editTodo.error = "sorry ,There is a problem.";
     });
+
+    //delete todo
+    builder.addCase(deleteTodo.pending, (state) => {
+      state.deleteTodo.loading = true;
+    });
+
+    builder.addCase(
+      deleteTodo.fulfilled,
+      (state, action: PayloadAction<{ id: number }>) => {
+        state.deleteTodo.loading = false;
+        state.deleteTodo.deletedata = action.payload;
+        state.deleteTodo.error = "";
+        state.getTodos.todos = state.getTodos.todos.filter(
+          (todo) => todo.id !== action.payload.id
+        );
+      }
+    );
+
+    builder.addCase(deleteTodo.rejected, (state) => {
+      state.deleteTodo.loading = false;
+      state.deleteTodo.deletedata = undefined;
+      state.deleteTodo.error = "sorry ,There is a problem.";
+    });
   },
 });
 
 export default TodosSlice.reducer;
-export { fetchTodos, postTodo, editTodo };
+export { fetchTodos, postTodo, editTodo, deleteTodo };
 export const { removeAmount } = TodosSlice.actions;

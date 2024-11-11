@@ -20,8 +20,6 @@ function AddTask() {
     userId: 1,
   });
 
-  console.log(todo);
-
   const createTodoHandeler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { title, body, userId } = dataTodoPost;
