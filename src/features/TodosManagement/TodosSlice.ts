@@ -18,6 +18,7 @@ import {
 } from "../../utils/functionApi";
 
 const initialState: TodoInitialState = {
+  filter: localStorage.getItem("filter") || "",
   getTodos: {
     loading: false,
     todos: [],
@@ -68,6 +69,9 @@ const TodosSlice = createSlice({
         title: "",
         completed: false,
       };
+    },
+    filterTodos: (state, action: PayloadAction<string>) => {
+      state.filter = action.payload;
     },
   },
 
@@ -163,4 +167,4 @@ const TodosSlice = createSlice({
 
 export default TodosSlice.reducer;
 export { fetchTodos, postTodo, editTodo, deleteTodo };
-export const { removeAmount } = TodosSlice.actions;
+export const { removeAmount, filterTodos } = TodosSlice.actions;

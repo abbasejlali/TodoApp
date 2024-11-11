@@ -18,7 +18,6 @@ function TaskItem({ todo }: { todo: Todo }) {
   const { id, userId, completed, title } = todo;
   const {
     editTodo: { editdata, loading },
-    // deleteTodo: { loading: loadingdelete },
   } = useSelector((state: RootState) => state.todos);
   const dispatch = useDispatch<AppDispatch>();
   const [openModal, setOpenModal] = useState(false);

@@ -1,8 +1,8 @@
+// helper
 import { callapi } from "../libs/helpers/callapi";
-import { errorAlert } from "../libs/errorAlert";
 
+// typescript
 import { DataTodoPost, FetchTodosArgs, Todo } from "../typescript/interface";
-import { successAlert } from "../libs/successAlert";
 
 const fetchTodosApi = async ({ page, completed }: FetchTodosArgs) => {
   try {
@@ -22,10 +22,8 @@ const postTodoApi = async ({ title, body, userId }: DataTodoPost) => {
       body,
       userId,
     });
-    successAlert();
     return { ...res?.data, complated: false };
   } catch (err: any) {
-    errorAlert();
     return err;
   }
 };
@@ -38,10 +36,8 @@ const editTodoApi = async ({ title, id, userId, completed }: Todo) => {
       id,
       completed,
     });
-    successAlert();
     return res?.data;
   } catch (err: any) {
-    errorAlert();
     return err;
   }
 };
@@ -49,10 +45,8 @@ const editTodoApi = async ({ title, id, userId, completed }: Todo) => {
 const deleteTodoApi = async ({ id }: { id: number }) => {
   try {
     const res = await callapi().delete(`/todos/${id}`);
-    successAlert();
     return { ...res?.data, id };
   } catch (err: any) {
-    errorAlert();
     return err;
   }
 };

@@ -3,7 +3,12 @@ import React, { useEffect, useState } from "react";
 // typescript
 import { TaskListArgs, Todo } from "../../typescript/interface";
 
-function TaskList({ setFilter, todos, setTodosBySearch }: TaskListArgs) {
+//redux
+import { filterTodos } from "../../features/TodosManagement/TodosSlice";
+import { useDispatch } from "react-redux";
+
+function TaskList({ todos, setTodosBySearch }: TaskListArgs) {
+  const dispatch = useDispatch();
   const [search, setSearch] = useState<string>("");
   const [selectedValue, setSelectedValue] = useState<string>(() => {
     return localStorage.getItem("filter") || "";
@@ -11,11 +16,11 @@ function TaskList({ setFilter, todos, setTodosBySearch }: TaskListArgs) {
 
   const filterHandeler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedValue(e.target.value);
-    setFilter(e.target.value);
+    dispatch(filterTodos(selectedValue));
   };
 
   useEffect(() => {
-    setFilter(selectedValue);
+    dispatch(filterTodos(selectedValue));
   }, [selectedValue]);
 
   const searchHandeler = (e: React.ChangeEvent<HTMLInputElement>) => {

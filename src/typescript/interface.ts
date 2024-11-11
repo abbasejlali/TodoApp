@@ -6,6 +6,7 @@ interface Todo {
 }
 
 interface TodoInitialState {
+  filter: string;
   getTodos: {
     loading: boolean;
     todos: Todo[];
@@ -34,7 +35,6 @@ interface FetchTodosArgs {
 }
 
 interface TaskListArgs {
-  setFilter: (newFilter: string) => void;
   todos: Todo[];
   setTodosBySearch: (newFilter: Todo[]) => void;
 }

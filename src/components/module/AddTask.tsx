@@ -2,8 +2,10 @@ import { useState } from "react";
 
 // typescript
 import { DataTodoPost } from "../../typescript/interface";
-import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../app/store";
+
+// redux toolkit
+import { useDispatch, useSelector } from "react-redux";
 import { postTodo } from "../../features/TodosManagement/TodosSlice";
 
 function AddTask() {

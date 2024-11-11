@@ -16,13 +16,11 @@ import { Todo } from "../../typescript/interface";
 function Homepage() {
   const {
     getTodos: { loading, todos },
+    filter,
   } = useSelector((state: RootState) => state?.todos);
   const dispatch = useDispatch<AppDispatch>();
   const [currentValue, setCurrentValue] = useState<number>(1);
   const totalPages = Math.ceil(200 / 10);
-  const [filter, setFilter] = useState<string>(() => {
-    return localStorage.getItem("filter") || "";
-  });
   const [todosBySearch, setTodosBySearch] = useState<Todo[]>([]);
 
   useEffect(() => {
@@ -48,7 +46,7 @@ function Homepage() {
       ) : (
         <div className="container p-10 mx-auto max-w-7xl">
           <TaskList
-            setFilter={setFilter}
+            // setFilter={setFilter}
             todos={todos}
             setTodosBySearch={setTodosBySearch}
           />
