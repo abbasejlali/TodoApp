@@ -1,15 +1,24 @@
 import { useEffect, useState } from "react";
-import { DataTodoEdit, Todo } from "../../typescript/interface";
+
+// redux toolkit
 import { useDispatch, useSelector } from "react-redux";
+
+// actions
+import {
+  editTodo,
+  removeAmount,
+} from "../../features/TodosManagement/TodosSlice";
+
+// typescript
+import { DataTodoEdit, Todo } from "../../typescript/interface";
 import { AppDispatch, RootState } from "../../app/store";
-import { editTodo } from "../../features/TodosManagement/TodosSlice";
 
 function TaskItem({ todo }: { todo: Todo }) {
   const { id, userId, completed, title } = todo;
   const {
     editTodo: { editdata, loading },
   } = useSelector((state: RootState) => state.todos);
-  const daispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>();
   const [openModal, setOpenModal] = useState(false);
   const [dataTodoEdit, setDataTodoEdit] = useState<DataTodoEdit>({
     title: "",
@@ -18,7 +27,7 @@ function TaskItem({ todo }: { todo: Todo }) {
     completed: false,
   });
 
-  const editHandeler = (e: any) => {
+  const changeHandeler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name;
     if (name === "title") {
       setDataTodoEdit({ ...dataTodoEdit, [e.target.name]: e.target.value });
@@ -27,18 +36,17 @@ function TaskItem({ todo }: { todo: Todo }) {
     }
   };
 
-  const editTodoHandeler = async (e: any) => {
+  const editTodoHandeler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { title, completed } = dataTodoEdit;
-    daispatch(editTodo({ title, completed, id, userId }));
+    dispatch(editTodo({ title, completed, id, userId }));
   };
+
   useEffect(() => {
-    setDataTodoEdit({ ...dataTodoEdit, id, title, completed, userId });
+    if (openModal)
+      setDataTodoEdit({ ...dataTodoEdit, id, title, completed, userId });
   }, [openModal]);
 
-  // useEffect(() => {
-  //   console.log(dataTodoEdit);
-  // }, [dataTodoEdit]);
   return (
     <>
       <button
@@ -65,7 +73,10 @@ function TaskItem({ todo }: { todo: Todo }) {
                 type="button"
                 className="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                 data-modal-hide="authentication-modal"
-                onClick={() => setOpenModal(false)}
+                onClick={() => {
+                  dispatch(removeAmount());
+                  setOpenModal(false);
+                }}
               >
                 <svg
                   className="w-3 h-3"
@@ -105,7 +116,7 @@ function TaskItem({ todo }: { todo: Todo }) {
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="abbas"
                     value={dataTodoEdit.title}
-                    onChange={editHandeler}
+                    onChange={changeHandeler}
                     required
                   />
                 </div>
@@ -118,7 +129,7 @@ function TaskItem({ todo }: { todo: Todo }) {
                           checked={dataTodoEdit.completed}
                           className="checkbox"
                           name="completed"
-                          onChange={editHandeler}
+                          onChange={changeHandeler}
                         />
                         <span className="ml-3 text-base font-medium label-text">
                           Complated
@@ -141,6 +152,22 @@ function TaskItem({ todo }: { todo: Todo }) {
             </div>
           </div>
         </div>
+        {editdata && "id" in editdata && editdata.id && (
+          <div className="transition-all bg-white border shadow-md card min-h-60 text-neutral-content w-96">
+            <div className="items-center text-center card-body">
+              <h2 className="card-title text-slate-900">{editdata.title}</h2>
+              <h6 className="card-title text-slate-900">id : {editdata.id}</h6>
+              <h6 className="card-title text-slate-900">
+                userId : {editdata.userId}
+              </h6>
+              {editdata.completed ? (
+                <p className="font-medium text-green-700 ">Completed</p>
+              ) : (
+                <p className="font-medium text-red-700 ">Uncompleted</p>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

@@ -20,7 +20,9 @@ function AddTask() {
     userId: 1,
   });
 
-  const createTodoHandeler = async (e: any) => {
+  console.log(todo);
+
+  const createTodoHandeler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { title, body, userId } = dataTodoPost;
     if (title && body) {
@@ -28,7 +30,9 @@ function AddTask() {
     }
   };
 
-  const changeHandeler = (e: any) => {
+  const changeHandeler = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setDataTodoPost({ ...dataTodoPost, [e.target.name]: e.target.value });
   };
 

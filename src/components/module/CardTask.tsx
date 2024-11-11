@@ -6,11 +6,7 @@ import TaskItem from "./TaskItem";
 function CardTask({ todo }: { todo: Todo }) {
   const { title, id, completed, userId } = todo;
   return (
-    <div
-      key={id}
-      className="bg-white border shadow-md card min-h-60 text-neutral-content w-96"
-    >
-      <input type="checkbox" className="absolute checkbox top-4 left-3 " />
+    <div className="bg-white border shadow-md card min-h-60 text-neutral-content w-96">
       <div className="items-center text-center card-body">
         <h2 className="card-title text-slate-900">{title}</h2>
         <h6 className="card-title text-slate-900">id : {id}</h6>

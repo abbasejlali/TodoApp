@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // typescript
 import { TaskListArgs, Todo } from "../../typescript/interface";
@@ -9,7 +9,7 @@ function TaskList({ setFilter, todos, setTodosBySearch }: TaskListArgs) {
     return localStorage.getItem("filter") || "";
   });
 
-  const filterHandeler = (e: any) => {
+  const filterHandeler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedValue(e.target.value);
     setFilter(e.target.value);
   };
@@ -18,12 +18,11 @@ function TaskList({ setFilter, todos, setTodosBySearch }: TaskListArgs) {
     setFilter(selectedValue);
   }, [selectedValue]);
 
-  const searchHandeler = (e: any) => {
+  const searchHandeler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 
   useEffect(() => {
-    console.log(search);
     const searchBykeyword: Todo[] = todos?.filter((todo) =>
       todo.title.toLocaleLowerCase().includes(search.toLocaleLowerCase())
     );
@@ -42,7 +41,7 @@ function TaskList({ setFilter, todos, setTodosBySearch }: TaskListArgs) {
       <select
         onChange={filterHandeler}
         value={selectedValue}
-        className="w-full max-w-xs select select-bordered "
+        className="w-full max-w-xs select select-bordered"
       >
         <option value="">All</option>
         <option value="completed=true">Completed</option>

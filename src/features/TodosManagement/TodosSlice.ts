@@ -47,7 +47,17 @@ const editTodo = createAsyncThunk<Todo, Todo>("Todos/editTodo", editTodoApi);
 const TodosSlice = createSlice({
   name: "Todos",
   initialState,
-  reducers: {},
+  reducers: {
+    removeAmount: (state) => {
+      state.editTodo.editdata = {
+        id: 0,
+        userId: 0,
+        title: "",
+        completed: false,
+      };
+    },
+  },
+
   extraReducers: (builder) => {
     //get todos
     builder.addCase(fetchTodos.pending, (state) => {
@@ -113,3 +123,4 @@ const TodosSlice = createSlice({
 
 export default TodosSlice.reducer;
 export { fetchTodos, postTodo, editTodo };
+export const { removeAmount } = TodosSlice.actions;
