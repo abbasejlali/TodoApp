@@ -3,7 +3,6 @@ import { errorAlert } from "../libs/errorAlert";
 
 import { DataTodoPost, FetchTodosArgs, Todo } from "../typescript/interface";
 import { successAlert } from "../libs/successAlert";
-import axios from "axios";
 
 const fetchTodosApi = async ({ page, completed }: FetchTodosArgs) => {
   try {
@@ -48,9 +47,7 @@ const editTodoApi = async ({ title, id, userId, completed }: Todo) => {
 
 const deleteTodoApi = async ({ id }: { id: number }) => {
   try {
-    const res = await axios.delete(
-      `https://jsonplaceholder.typicdsadode.com/todos/${id}`
-    );
+    const res = await callapi().delete(`/todos/${id}`);
     successAlert();
     return { ...res?.data, id };
   } catch (err: any) {
