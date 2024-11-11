@@ -10,7 +10,7 @@ import { postTodo } from "../../features/TodosManagement/TodosSlice";
 
 function AddTask() {
   const {
-    postTodos: { loading, todo },
+    postTodos: { loading },
   } = useSelector((state: RootState) => state.todos);
   const daispatch = useDispatch<AppDispatch>();
   const [dataTodoPost, setDataTodoPost] = useState<DataTodoPost>({

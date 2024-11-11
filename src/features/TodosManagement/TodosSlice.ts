@@ -90,7 +90,7 @@ const TodosSlice = createSlice({
       }
     );
 
-    builder.addCase(fetchTodos.rejected, (state, action) => {
+    builder.addCase(fetchTodos.rejected, (state) => {
       state.getTodos.loading = false;
       state.getTodos.todos = [];
       state.getTodos.error = "sorry , There is a problem.";
