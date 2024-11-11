@@ -1,8 +1,5 @@
 import { useState } from "react";
 
-// mocule
-import CardTask from "./CardTask";
-
 // typescript
 import { DataTodoPost } from "../../typescript/interface";
 import { useDispatch, useSelector } from "react-redux";
@@ -67,7 +64,6 @@ function AddTask() {
           )}
         </button>
       </form>
-      {todo?.id && <CardTask todo={todo} />}
     </>
   );
 }

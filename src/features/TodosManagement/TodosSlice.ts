@@ -103,6 +103,7 @@ const TodosSlice = createSlice({
         state.postTodos.loading = false;
         state.postTodos.todo = action.payload;
         state.postTodos.error = "";
+        state.getTodos.todos = [...state.getTodos.todos, action.payload];
       }
     );
 
@@ -123,6 +124,9 @@ const TodosSlice = createSlice({
         state.editTodo.loading = false;
         state.editTodo.editdata = action.payload;
         state.editTodo.error = "";
+        state.getTodos.todos = state.getTodos.todos.map((todo) =>
+          todo.id === action.payload?.id ? action.payload : todo
+        );
       }
     );
 

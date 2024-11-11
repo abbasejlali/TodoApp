@@ -22,6 +22,7 @@ const postTodoApi = async ({ title, body, userId }: DataTodoPost) => {
       body,
       userId,
     });
+    successAlert();
     return { ...res?.data, complated: false };
   } catch (err: any) {
     errorAlert();

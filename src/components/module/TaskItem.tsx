@@ -18,7 +18,7 @@ function TaskItem({ todo }: { todo: Todo }) {
   const { id, userId, completed, title } = todo;
   const {
     editTodo: { editdata, loading },
-    deleteTodo: { loading: loadingdelete, deletedata },
+    // deleteTodo: { loading: loadingdelete },
   } = useSelector((state: RootState) => state.todos);
   const dispatch = useDispatch<AppDispatch>();
   const [openModal, setOpenModal] = useState(false);
@@ -53,7 +53,6 @@ function TaskItem({ todo }: { todo: Todo }) {
     dispatch(deleteTodo({ id }));
   };
 
-  console.log({ deletedata, loadingdelete });
   return (
     <>
       <button
@@ -67,7 +66,6 @@ function TaskItem({ todo }: { todo: Todo }) {
       </button>
       <div
         id="authentication-modal"
-        aria-hidden="true"
         className={`${
           openModal ? "flex" : "hidden"
         } overflow-y-auto transition-all  overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}
@@ -89,7 +87,6 @@ function TaskItem({ todo }: { todo: Todo }) {
               >
                 <svg
                   className="w-3 h-3"
-                  aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 14 14"
